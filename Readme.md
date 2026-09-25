@@ -6,6 +6,7 @@ Automated UI test scripts for **saucedemo.com** (https://www.saucedemo.com/), bu
 - Python 3.14
 - Selenium WebDriver
 - Pytest
+- Page Object Model — login page refactored into `pages/login_page.py`, shared across all tests that log in (more page objects planned)
 - `webdriver-manager` (auto-installs matching ChromeDriver)
 
 ## Test Cases
@@ -22,12 +23,11 @@ Automated UI test scripts for **saucedemo.com** (https://www.saucedemo.com/), bu
 
 ## How to Run
 
-Run the whole suite with pytest:
+Run any test file with pytest:
 
-'''
-pytest test_login.py -v
-'''
-
+```
+python -m pytest test_login.py -v
+```
 
 Add `-v` for verbose output showing each test name and pass/fail status.
 
@@ -36,6 +36,7 @@ Add `-v` for verbose output showing each test name and pass/fail status.
 2. These same three files use `WebDriverWait` + `expected_conditions` for reliability. The remaining tests (`test_login.py`, `test_add_to_cart.py`, `test_product_count.py`, `test_sorting.py`, `test_lockedout_user.py`) still use fixed `time.sleep()` delays and could be upgraded the same way.
 
 ## Next Steps
+- Build out more page objects (inventory, cart, checkout pages) and migrate the rest of the tests to use them
 - Add `try/finally` to the remaining tests that still don't have it
 - Migrate remaining `time.sleep()`-based tests to explicit waits
 - Add a shared `pytest` fixture for driver setup/teardown to cut down on repeated boilerplate across files

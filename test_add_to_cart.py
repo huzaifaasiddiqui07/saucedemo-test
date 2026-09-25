@@ -4,17 +4,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-import time
+from pages.login_page import LoginPage
 
 def test_add_to_cart():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.get("https://www.saucedemo.com/")
     wait = WebDriverWait(driver, 10)
 
-    wait.until(EC.presence_of_element_located((By.ID, "user-name"))).send_keys("standard_user")
-    driver.find_element(By.ID, "password").send_keys("secret_sauce")
-    driver.find_element(By.ID, "login-button").click()
-
+    login_page=LoginPage(driver)
+    login_page.login("standard_user", "secret_sauce")
+    
     wait.until(EC.presence_of_element_located((By.ID, "add-to-cart-sauce-labs-backpack")))
     driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack").click()
     driver.find_element(By.ID, "add-to-cart-sauce-labs-bike-light").click()
